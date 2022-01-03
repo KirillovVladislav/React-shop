@@ -47,3 +47,41 @@ nav {
     bottom: unset;
   }
 }
+
+.basket-list {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #fff;
+  width: 50rem;
+  animation: show 500ms ease-in-out;
+}
+
+.basket-close {
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  right: 00.5rem;
+  color: #fff;
+}
+
+.basket-delete {
+  cursor: pointer;
+}
+
+.secondary-content {
+  cursor: pointer;
+}
+
+@keyframes show {
+  from {
+    top: 70%;
+    opacity: 0;
+  }
+  to {
+    top: 50%;
+    opacity: 1;
+  }
+}
