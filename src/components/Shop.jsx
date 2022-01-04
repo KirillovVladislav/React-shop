@@ -22,6 +22,35 @@ function Shop() {
       setOrder( order.filter(orderItem => orderItem.id !== itemId))
     }
 
+    const incQuantity = (itemId) => {
+        const newOrder = order.map(orderItem => {
+            if (orderItem.id === itemId) {
+                return {
+                    ...orderItem,
+                    quantity: orderItem.quantity + 1
+               }
+            } else {
+                return orderItem
+           }
+        })
+        setOrder(newOrder)
+   }
+
+    const decQuantity = (itemId) => {
+        const newOrder = order.map(orderItem => {
+            if (orderItem.id === itemId) {
+                const newQuantity = orderItem.quantity -1
+                return {
+                    ...orderItem,
+                    quantity: newQuantity  >= 1 ? newQuantity : 1
+               }
+            } else {
+                return orderItem
+           }
+        })
+        setOrder(newOrder)
+   }
+
     const addToBasket = (item) => {
         console.log(item)
 
@@ -72,10 +101,20 @@ function Shop() {
         {
             loading ?
                 <Preloader /> :
-                <GoodList goods={goods} addToBasket={addToBasket} />
+                <GoodList
+                    goods={goods}
+                    addToBasket={addToBasket}
+                />
         }
         {
-            basketShow && <BasketList order={order} removeFromBasket={removeFromBasket}  handleBasketShow={handleBasketShow}/>
+            basketShow &&
+            <BasketList
+                order={order}
+                removeFromBasket={removeFromBasket}
+                handleBasketShow={handleBasketShow}
+                incQuantity={incQuantity}
+                decQuantity={decQuantity}
+            />
         }
     </main>
 }
