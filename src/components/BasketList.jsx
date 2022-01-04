@@ -21,7 +21,11 @@ function BasketList({ order, removeFromBasket, handleBasketShow , incQuantity, d
             ))
                 : <li class="collection-item">Корзина пуста</li>
         }
-        <li className="collection-item active">общая стоимость - { totalPrice } руб.</li>
+        <li className="collection-item active">
+            общая стоимость - {totalPrice} руб.
+            
+        </li>
+        
         <i class="material-icons basket-close" onClick={() => handleBasketShow()}>close</i>
     </ul>
 }
