@@ -15,8 +15,20 @@ function GoodsItem({addToBasket,id,name, description, full_background,price}) {
                     <p>{description }</p>
                 </div>
                 <div className="card-action">
-          <button className="btn" onClick={() => addToBasket({id, price,name})}>купить </button>
-                    <span className="right" style={{fontSize:'1.8rem'}}>{ price} руб.</span>
+          <button
+            className="btn"
+            onClick={() => addToBasket({ 
+              id,
+              price,
+              name
+            })}>
+            купить
+          </button>
+          <span
+            className="right"
+            style={{ fontSize: '1.8rem' }}>
+            {price} руб.
+          </span>
         </div>
       </div>
     

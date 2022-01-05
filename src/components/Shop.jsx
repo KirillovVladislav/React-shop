@@ -53,9 +53,7 @@ function Shop() {
    }
 
     const addToBasket = (item) => {
-        console.log(item)
-
-    
+       
         const itemIndex = order.findIndex(orderItem => orderItem.id === item.id)
         console.log(itemIndex)
         if (itemIndex < 0) {
