@@ -1,8 +1,12 @@
-import {BasketItem} from './BasketItem'
+import {useContext} from 'react'
+import {ShopContext} from '../context'
+import { BasketItem } from './BasketItem'
 
 
-function BasketList({ order, removeFromBasket, handleBasketShow , incQuantity, decQuantity}) { 
+function BasketList() { 
     
+    const {order,handleShowBasket} = useContext(ShopContext)
+
     const totalPrice = order.reduce((sum, orderItem) => {
        return sum + orderItem.price* orderItem.quantity 
     }, 0)
@@ -14,9 +18,7 @@ function BasketList({ order, removeFromBasket, handleBasketShow , incQuantity, d
                 <BasketItem
                     key={orderItem.id}
                     {...orderItem}
-                    removeFromBasket={removeFromBasket}
-                    incQuantity={incQuantity}
-                    decQuantity={decQuantity}
+                   
                 />
             ))
                 : <li class="collection-item">Корзина пуста</li>
@@ -26,7 +28,7 @@ function BasketList({ order, removeFromBasket, handleBasketShow , incQuantity, d
             
         </li>
         
-        <i class="material-icons basket-close" onClick={() => handleBasketShow()}>close</i>
+        <i class="material-icons basket-close" onClick={() => handleShowBasket()}>close</i>
     </ul>
 }
 

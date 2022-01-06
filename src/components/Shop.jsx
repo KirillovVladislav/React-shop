@@ -1,5 +1,8 @@
-import React,{useState, useEffect}  from  'react'
-import {API_KEY, API_URL} from '../config'
+import React,{ useEffect, useContext}  from  'react'
+import { API_KEY, API_URL } from '../config'
+
+import { ShopContext } from '../context'
+    
 import { Cart } from './Cart'
 import { GoodList } from './GoodsList'
 import { Preloader } from './Preloader'
@@ -9,81 +12,8 @@ import {Alert} from './Alert'
 
 function Shop() {
 
-    const [goods, setGoods] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [order, setOrder] = useState([])
-    const [basketShow, setBasketShow] = useState(false)
-    const [alertName, setAlertName] = useState('')
-
-    const handleBasketShow = () => { 
-        setBasketShow(!basketShow)
-    }
-
-    const removeFromBasket = (itemId) => {
-      setOrder( order.filter(orderItem => orderItem.id !== itemId))
-    }
-
-    const incQuantity = (itemId) => {
-        const newOrder = order.map(orderItem => {
-            if (orderItem.id === itemId) {
-                return {
-                    ...orderItem,
-                    quantity: orderItem.quantity + 1
-               }
-            } else {
-                return orderItem
-           }
-        })
-        setOrder(newOrder)
-   }
-
-    const decQuantity = (itemId) => {
-        const newOrder = order.map(orderItem => {
-            if (orderItem.id === itemId) {
-                const newQuantity = orderItem.quantity -1
-                return {
-                    ...orderItem,
-                    quantity: newQuantity  >= 1 ? newQuantity : 1
-               }
-            } else {
-                return orderItem
-           }
-        })
-        setOrder(newOrder)
-   }
-
-    const addToBasket = (item) => {
-       
-        const itemIndex = order.findIndex(orderItem => orderItem.id === item.id)
-        console.log(itemIndex)
-        if (itemIndex < 0) {
-            const newItem = {
-                ...item,
-                quantity: 1
-            }
-            setOrder([...order, newItem])
-        } else {
-            const newOrder = order.map((orderItem, index) => {
-                if (index === itemIndex) {
-                    return {
-                        ...orderItem,
-                        quantity: orderItem.quantity + 1
-                    }
-                } else {
-                    return orderItem
-                }
-            })
-
-            setOrder(newOrder)
-        }
-
-        setAlertName(item.name)
-     } 
-
-    const closeAlert = () => {
-        setAlertName('')
-    }
-    
+    const {loading,order,basketShow,setGoods, alertName} = useContext(ShopContext)
+        
     useEffect(() => {
         fetch(API_URL, {
             headers: {
@@ -92,33 +22,24 @@ function Shop() {
             })
             .then(response => response.json())
             .then((data) => {
-                data.featured && setGoods(data.featured)
-                setLoading(false)
+                setGoods(data.featured)
             })
+        //eslint-disable-next-line
     }, [])
 
     return <main className="container content">
-        <Cart handleBasketShow={handleBasketShow} quantity={order.length} />
+        <Cart  quantity={order.length} />
         {
-            loading ?
-                <Preloader /> :
-                <GoodList
-                    goods={goods}
-                    addToBasket={addToBasket}
-                />
+            loading
+                ?  <Preloader /> 
+                :  <GoodList /> 
+             
         }
         {
-            basketShow &&
-            <BasketList
-                order={order}
-                removeFromBasket={removeFromBasket}
-                handleBasketShow={handleBasketShow}
-                incQuantity={incQuantity}
-                decQuantity={decQuantity}
-            />
+            basketShow && <BasketList/>
         }
         {
-            alertName && <Alert name={ alertName} closeAlert={closeAlert}/>
+            alertName && <Alert />
         }
     </main>
 }

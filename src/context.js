@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react"
-import reducer from "./reducer"
+import { reducer } from "./reducer"
 
 export const ShopContext = createContext()
 
@@ -55,6 +55,13 @@ export const ContextProvider = ({ children }) => {
   value.handleShowBasket = () => {
     dispatch({
       type: "TOGGLE_BASKET",
+    })
+  }
+
+  value.setGoods = data => {
+    dispatch({
+      type: "SET_GOODS",
+      payload: data,
     })
   }
 

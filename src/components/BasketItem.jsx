@@ -1,11 +1,15 @@
-function BasketItem({  name, price, quantity,removeFromBasket,id ,incQuantity,decQuantity }) {
-    console.log(id)
+import {useContext} from 'react'
+import {ShopContext} from '../context'
+
+function BasketItem({ name, price, quantity, id }) {
+    console.log(price)
+    const  { removeFromBasket,incQuantity,decQuantity } = useContext(ShopContext)
     
-    return <li class="collection-item">
+    return <li className="collection-item">
         {name}
-        <i class="material-icons basket-quantity" onClick={() => decQuantity(id)} >remove</i>
+        <i className="material-icons basket-quantity" onClick={() => decQuantity(id)} >remove</i>
         x{quantity}
-        <i class="material-icons basket-quantity" onClick={() => incQuantity(id)} >add</i> = {price * quantity} руб.
+        <i className="material-icons basket-quantity" onClick={() => incQuantity(id)} >add</i> = {price * quantity} руб.
         <span
             className="secondary-content"
             onClick={() => removeFromBasket(id)}>

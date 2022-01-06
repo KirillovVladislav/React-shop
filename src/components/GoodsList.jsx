@@ -1,6 +1,11 @@
-import {GoodsItem} from './GoodsItem'
+import { useContext } from 'react'
+import { ShopContext } from '../context'
+import { GoodsItem } from './GoodsItem'
 
-function GoodList({ goods, addToBasket}) {
+function GoodList() {
+
+    const {goods } = useContext(ShopContext)
+
     if (!goods.length) {
         return <h3>ошибка</h3>
     }
@@ -8,7 +13,7 @@ function GoodList({ goods, addToBasket}) {
     return <div className="goods">
         {
             goods.map((item) => (
-                <GoodsItem key={item.id} {...item} addToBasket={addToBasket}/>
+                <GoodsItem key={item.id} {...item} />
             ))
         }
     </div>
